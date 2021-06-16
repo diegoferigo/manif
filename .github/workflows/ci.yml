@@ -213,7 +213,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest] #windows-latest,
+        platform: [macos-latest, ubuntu-latest, windows-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
     runs-on: ${{ matrix.platform }}
     steps:
@@ -233,6 +233,9 @@ jobs:
       - name: Setup brew
         if: runner.os == 'macOS'
         run: brew install eigen
+      - name: Setup choco
+        if: contains(matrix.platform, 'windows')
+        run: choco install eigen
       - name: Setup
         run: |
           python3 -m pip install --upgrade pip
